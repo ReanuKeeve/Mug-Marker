@@ -2,7 +2,7 @@
   {
     "id": "001",
     "title": "Comic",
-    "image": "assets/comics/001.jpg",
+    "image": "assets/comics/001.JPG",
     "alt": "Another test comic so the archive has more than one item.",
     "description": "",
     "tags": [
@@ -13,7 +13,7 @@
   {
     "id": "002",
     "title": "Second Comic",
-    "image": "assets/comics/002.jpg",
+    "image": "assets/comics/002.JPG",
     "alt": "Another test comic so the archive has more than one item.",
     "description": "",
     "tags": []
@@ -21,7 +21,7 @@
   {
     "id": "003",
     "title": "Classroom  presentation",
-    "image": "assets/comics/003.png",
+    "image": "assets/comics/003.PNG",
     "alt": "This is just a placeholder comic for development.",
     "description": "",
     "tags": []
@@ -29,7 +29,7 @@
   {
     "id": "004",
     "title": "Second Test Comic",
-    "image": "assets/comics/004.png",
+    "image": "assets/comics/004.PNG",
     "alt": "Another test comic so the archive has more than one item.",
     "description": "",
     "tags": []
