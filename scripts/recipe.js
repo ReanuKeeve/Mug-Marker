@@ -10,7 +10,7 @@ async function initRecipePage() {
 
   if (!id) return;
 
-  const response = await fetch('/data/recipes.json');
+  const response = await fetch('data/recipes.json');
   const recipes = await response.json();
 
   const recipe = recipes.find(r => r.id === id);

@@ -2,51 +2,51 @@
   {
     "id": "w-001",
     "title": "Informative Poster and Presentation Rubric",
-    "image": "/assets/worksheets/w-001/w-001-1.png",
+    "image": "assets/worksheets/w-001/w-001-1.png",
     "images": [
-      "/assets/worksheets/w-001/w-001-1.png", 
-      "/assets/worksheets/w-001/w-001-2.png"
+      "assets/worksheets/w-001/w-001-1.png", 
+      "assets/worksheets/w-001/w-001-2.png"
     ],
     "description": "This rubric helps students understand the criteria for creating effective informative posters and presentations.",
     "tags": ["rubric", "poster", "presentation"],
     "files": [
       {
         "label": "Download PDF",
-        "url": "/assets/worksheets/w-001/Informative Poster and Presentation Rubric.pdf"
+        "url": "assets/worksheets/w-001/Informative Poster and Presentation Rubric.pdf"
       }
     ]
   },
   {
     "id": "w-002",
     "title": "Story Sorting",
-    "image": "/assets/worksheets/w-002/w-002-1.png",
+    "image": "assets/worksheets/w-002/w-002-1.png",
     "images": [
-      "/assets/worksheets/w-002/w-002-1.png", 
-      "/assets/worksheets/w-002/w-002-2.png"
+      "assets/worksheets/w-002/w-002-1.png", 
+      "assets/worksheets/w-002/w-002-2.png"
     ],
     "description": "Storytelling is an essential skill that helps students organize their thoughts and communicate effectively. This worksheet guides students through the process of sorting story elements to enhance their narrative skills.",
     "tags": ["storytelling", "sequence", "organization"],
     "files": [
       {
         "label": "Download PDF",
-        "url": "/assets/worksheets/w-002/Story Sort.pdf"
+        "url": "assets/worksheets/w-002/Story Sort.pdf"
       }
     ]
   },
   {
     "id": "w-003",
     "title": "Rainforest",
-    "image": "/assets/worksheets/w-003/Q2W1-3.png",
+    "image": "assets/worksheets/w-003/Q2W1-3.png",
     "images": [
-      "/assets/worksheets/w-003/Q2W1-3.png", 
-      "/assets/worksheets/w-003/Q2W1-4.png"
+      "assets/worksheets/w-003/Q2W1-3.png", 
+      "assets/worksheets/w-003/Q2W1-4.png"
     ],
     "description": "This presentation is designed to educate students about the importance of rainforests, their ecosystems, and conservation efforts.",
     "tags": ["rainforest", "ecosystem", "conservation"],
     "files": [
       {
         "label": "Download PPTX",
-        "url": "/assets/worksheets/w-003/Q2W1.pptx"
+        "url": "assets/worksheets/w-003/Q2W1.pptx"
       }
     ]
   }

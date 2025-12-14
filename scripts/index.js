@@ -8,7 +8,7 @@ async function initHomeComic() {
 
   if (!titleElem || !imageElem) return;
 
-  const response = await fetch('/data/comics.json');
+  const response = await fetch('data/comics.json');
   const comics = await response.json();
 
   if (!Array.isArray(comics) || comics.length === 0) {
@@ -45,7 +45,7 @@ async function initHomeComic() {
   const nextId  = index < comics.length - 1 ? comics[index + 1].id : null;
 
   // Homepage should navigate on homepage (index.html?id=...)
-  const homeUrl = (comicId) => `/index.html?id=${encodeURIComponent(comicId)}`;
+  const homeUrl = (comicId) => `index.html?id=${encodeURIComponent(comicId)}`;
 
   // Helper to set href (and disabled class when missing)
   const setLinks = (idList, href, disabled) => {

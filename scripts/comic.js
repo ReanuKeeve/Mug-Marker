@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initComicPage().catch(err => {
     console.error('Error loading comic:', err);
-    // optional: show a user-facing error message
   });
 });
 
@@ -13,7 +12,7 @@ async function initComicPage() {
     return;
   }
 
-  const response = await fetch('/data/comics.json');
+  const response = await fetch('data/comics.json');
   const comics = await response.json();
 
   const comic = comics.find(c => c.id === id);
@@ -39,7 +38,7 @@ async function initComicPage() {
     altElem.textContent = comic.alt || '';
   }
 
-  // Wire nav buttons (update IDs to match your HTML)
+  // Wire nav buttons
   const firstBtn  = document.getElementById('first-link');
   const prevBtn   = document.getElementById('prev-link');
   const randomBtn = document.getElementById('random-link');
@@ -53,7 +52,7 @@ async function initComicPage() {
     if (prevComicId) {
       prevBtn.href = `comic.html?id=${prevComicId}`;
     } else {
-      prevBtn.classList.add('disabled'); // optional styling
+      prevBtn.classList.add('disabled');
     }
   }
 

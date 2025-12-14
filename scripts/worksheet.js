@@ -9,7 +9,7 @@ async function initWorksheetPage() {
   const id = params.get('id');
   if (!id) return;
 
-  const response = await fetch('/data/worksheets.json');
+  const response = await fetch('data/worksheets.json');
   const worksheets = await response.json();
 
   const worksheet = worksheets.find(w => w.id === id);

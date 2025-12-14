@@ -3,7 +3,7 @@ const worksheetsList = document.getElementById('worksheets-list');
 const recipesList = document.getElementById('recipes-list');
 
 if (comicsList) {
-    fetch('/data/comics.json')
+    fetch('data/comics.json')
         .then(response => response.json())
         .then(comics => {
             comics.forEach(comic => {
@@ -12,7 +12,7 @@ if (comicsList) {
                 const img = document.createElement('img');
                 img.src = comic.image;
                 img.alt = comic.title;
-                link.href = `/comic.html?id=${comic.id}`;
+                link.href = `comic.html?id=${comic.id}`;
                 link.appendChild(img);
                 item.appendChild(link);
 
@@ -29,7 +29,7 @@ if (comicsList) {
 if (worksheetsList) {
   initArchive({
     listEl: worksheetsList,
-    jsonUrl: '/data/worksheets.json',
+    jsonUrl: 'data/worksheets.json',
     pageType: 'worksheet',
     searchInputId: 'worksheet-search',
     tagsWrapId: 'worksheet-tags',
@@ -42,7 +42,7 @@ if (worksheetsList) {
 if (recipesList) {
   initArchive({
     listEl: recipesList,
-    jsonUrl: '/data/recipes.json',
+    jsonUrl: 'data/recipes.json',
     pageType: 'recipe',
     searchInputId: 'recipe-search',
     tagsWrapId: 'recipe-tags',
