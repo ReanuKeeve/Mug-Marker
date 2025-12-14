@@ -1,0 +1,106 @@
+document.addEventListener('DOMContentLoaded', () => {
+  initComicPage().catch(err => {
+    console.error('Error loading comic:', err);
+    // optional: show a user-facing error message
+  });
+});
+
+async function initComicPage() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+
+  if (!id) {
+    return;
+  }
+
+  const response = await fetch('/data/comics.json');
+  const comics = await response.json();
+
+  const comic = comics.find(c => c.id === id);
+  if (!comic) {
+    return;
+  }
+
+  const titleElem = document.getElementById('comic-title');
+  const imageElem = document.getElementById('comic-image');
+  const altElem   = document.getElementById('comic-alt');
+
+  const index = comics.findIndex(c => c.id === id);
+  const firstComicId = comics[0].id;
+  const lastComicId  = comics[comics.length - 1].id;
+  const prevComicId  = index > 0 ? comics[index - 1].id : null;
+  const nextComicId  = index < comics.length - 1 ? comics[index + 1].id : null;
+
+  // Populate content
+  titleElem.textContent = comic.title;
+  imageElem.src = comic.image;
+  imageElem.alt = comic.alt || comic.title;
+  if (altElem) {
+    altElem.textContent = comic.alt || '';
+  }
+
+  // Wire nav buttons (update IDs to match your HTML)
+  const firstBtn  = document.getElementById('first-link');
+  const prevBtn   = document.getElementById('prev-link');
+  const randomBtn = document.getElementById('random-link');
+  const nextBtn   = document.getElementById('next-link');
+  const lastBtn   = document.getElementById('last-link');
+
+  if (firstBtn) firstBtn.href = `comic.html?id=${firstComicId}`;
+  if (lastBtn)  lastBtn.href  = `comic.html?id=${lastComicId}`;
+
+  if (prevBtn) {
+    if (prevComicId) {
+      prevBtn.href = `comic.html?id=${prevComicId}`;
+    } else {
+      prevBtn.classList.add('disabled'); // optional styling
+    }
+  }
+
+  if (nextBtn) {
+    if (nextComicId) {
+      nextBtn.href = `comic.html?id=${nextComicId}`;
+    } else {
+      nextBtn.classList.add('disabled');
+    }
+  }
+
+  // Random button
+  if (randomBtn) {
+    const randomIndex = Math.floor(Math.random() * comics.length);
+    const randomID = comics[randomIndex].id;
+    randomBtn.href = `comic.html?id=${randomID}`;
+  }
+
+  const firstBtnBot  = document.getElementById('first-link-bottom');
+  const prevBtnBot   = document.getElementById('prev-link-bottom');
+  const randomBtnBot = document.getElementById('random-link-bottom');
+  const nextBtnBot   = document.getElementById('next-link-bottom');
+  const lastBtnBot   = document.getElementById('last-link-bottom');
+
+  if (firstBtnBot) firstBtnBot.href = `comic.html?id=${firstComicId}`;
+  if (lastBtnBot)  lastBtnBot.href  = `comic.html?id=${lastComicId}`;
+
+  if (prevBtnBot) {
+    if (prevComicId) {
+      prevBtnBot.href = `comic.html?id=${prevComicId}`;
+    } else {
+      prevBtnBot.classList.add('disabled'); // optional styling
+    }
+  }
+
+  if (nextBtnBot) {
+    if (nextComicId) {
+      nextBtnBot.href = `comic.html?id=${nextComicId}`;
+    } else {
+      nextBtnBot.classList.add('disabled');
+    }
+  }
+
+  // Random button
+  if (randomBtnBot) {
+    const randomIndex = Math.floor(Math.random() * comics.length);
+    const randomID = comics[randomIndex].id;
+    randomBtnBot.href = `comic.html?id=${randomID}`;
+  }
+}

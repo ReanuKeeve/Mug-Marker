@@ -1,0 +1,343 @@
+@font-face {
+    font-family: CraigScratch-Regular;
+    src: url(../assets/fonts/CraigScratch-Regular.otf) format("truetype");
+}
+
+:root {
+    --color-bg: #f5f5f7;
+    --color-card: #ffffff;
+    --color-border: #e0e0e6;
+    --color-text: #222222;
+    --color-text-muted: #555555;
+
+    --accent-lavender: #caa8d9;
+    --accent-yellow: #fbcd82;
+    --accent-blue: #b8d0e8;
+
+    --radius-large: 20px;
+    --radius-medium: 14px;
+    --shadow-soft: 0 12px 24px rgba(0, 0, 0, 0.08);
+    --shadow-tiny: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    --color-border-strong: #7b5a90;
+    --color-card-bg: #ffffff;
+    --radius-card: 20px;
+    --color-text-main: #222222;
+    --color-orange: #fbcd82;
+}
+
+/* Reset-ish */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+/* Layout */
+
+body>header,
+body>main,
+body>footer {
+    width: 100%;
+}
+
+body>main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+}
+
+/* ---------- Header + top bar (GLOBAL) ---------- */
+
+header {
+    background-color: #ac7bc4;
+    padding: 0.75rem 1rem 1rem;
+    border-bottom: 3px solid var(--color-border-strong);
+    font-family: CraigScratch-Regular, sans-serif;
+
+    /* layout */
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+div.logo {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    align-items: center;
+    gap: 0.4rem;
+
+}
+
+header .logo img {
+    width: 70px;
+    height: auto;
+    border-radius: 999px;
+    border: 3px solid var(--color-border-strong);
+    background-color: var(--color-card-bg);
+}
+
+/* Inner header (title + nav + socials) */
+header .header {
+    max-width: 960px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Title aligned with nav like in sketch */
+header h1 {
+    max-width: fit-content;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Nav links row */
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.2rem 0 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1rem;
+    margin-top: 1%;
+}
+
+header nav a {
+    font-size: 34px;
+    font-weight: 600;
+    padding-bottom: 0.1rem;
+    border-bottom: 3px solid transparent;
+    text-decoration: none;
+    color: var(--color-text-main);
+}
+
+header nav a:hover,
+header nav a:focus-visible {
+    border-bottom-color: var(--color-border-strong);
+}
+
+/* Social icons row */
+.socials-header {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    margin-top: 1%;
+}
+
+.socials-header a img {
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent-yellow);
+    border: 2px solid var(--color-border-strong);
+    padding: 0.25rem;
+    border-radius: 10px;
+}
+
+/* Header responsive tweaks */
+@media (max-width: 700px) {
+    header {
+        align-items: flex-start;
+    }
+
+    header .logo img {
+        width: 58px;
+    }
+
+    header .header {
+        gap: 0.35rem;
+    }
+
+    header nav ul {
+        gap: 0.75rem;
+        font-size: 0.92rem;
+    }
+}
+
+@media (min-width: 900px) {
+    header {
+        justify-content: center;
+    }
+}
+
+/* Core content card */
+
+.content-card {
+    background: var(--color-card);
+    border-radius: var(--radius-large);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+    padding: 1.5rem;
+    margin: 1.75rem auto;
+}
+
+/* Headings & text */
+
+h1,
+h2,
+h3 {
+    margin: 0 0 0.75rem;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 1.6rem;
+}
+
+h2 {
+    font-size: 1.3rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+}
+
+p {
+    margin: 0 0 0.75rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+/* Images */
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Small button style for comic navigation etc. */
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.75rem 0 1.2rem;
+}
+
+.btn-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    background: var(--accent-yellow);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+
+.btn-pill:hover {
+    background: #ffd698;
+}
+
+.btn-pill:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Simple footer */
+
+footer {
+    border-top: 1px solid var(--color-border);
+    padding: 1rem 1rem 1.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-top: auto;
+}
+
+/* Responsive tweaks */
+
+@media (max-width: 768px) {
+    header .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    body>main {
+        padding-inline: 0.75rem;
+    }
+
+    .content-card {
+        border-radius: 16px;
+        padding: 1.25rem;
+    }
+}
+
+.detail-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.detail-page section {
+  background: var(--color-card);
+  border-radius: var(--radius-large);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+}
+
+.download-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.download-list a {
+  padding: 0.45rem 0.9rem;
+  background: var(--accent-lavender);
+  border-radius: 999px;
+  font-weight: 600;
+  color: #222;
+  text-decoration: none;
+}
+
+.download-list a:hover {
+  background: var(--accent-blue);
+}
+
+#worksheet-image img {
+  border: 3px solid var(--color-border);
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  background: #eee;
+  object-fit: cover;
+}

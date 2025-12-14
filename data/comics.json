@@ -1,0 +1,26 @@
+[
+  {
+    "id": "001",
+    "title": "Comic",
+    "image": "/assets/comics/001.jpg",
+    "alt": "Another test comic so the archive has more than one item."
+  },
+  {
+    "id": "002",
+    "title": "Second Comic",
+    "image": "/assets/comics/002.jpg",
+    "alt": "Another test comic so the archive has more than one item."
+  },
+  {
+    "id": "003",
+    "title": "First Test Comic",
+    "image": "/assets/comics/003.png",
+    "alt": "This is just a placeholder comic for development."
+  },
+  {
+    "id": "004",
+    "title": "Second Test Comic",
+    "image": "/assets/comics/004.png",
+    "alt": "Another test comic so the archive has more than one item."
+  }
+]

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/contacts.css">
+    <title>Mug & Marker - Contacts</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                 <img src="/assets/logo.png" alt="Mug & Marker Logo">
+            </a>
+            <h1>Mug & Marker</h1>
+        </div>
+        <div class="header">
+            <nav>
+                <ul>
+                    <li><a href="comics.html">Comics</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="worksheets.html">Worksheets</a></li>
+                    <li><a href="contacts.html">Contact Us</a></li>
+                </ul>
+            </nav>
+            <div class="socials-header">
+                <a href="https://www.instagram.com/mugandmarker/" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/instagram-icon.png" alt="Instagram Icon">
+                </a>
+                <a href="https://www.facebook.com/mugandmarker" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/facebook-icon.png" alt="Facebook Icon">
+                </a>
+                <a href="https://www.bluesky.com/mugandmarker" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/bluesky-icon.png" alt="bluesky Icon">
+                </a>
+                <a href="https://www.x.com/mugandmarker" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/x-icon.png" alt="x Icon">
+                </a>
+                <a href="https://www.patreon.com/mugandmarker" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/patreon-icon.png" alt="Patreon Icon"> 
+                </a>
+            </div>
+        </div>
+    </header><main class="contact-page">
+  <section class="content-card contact-card" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Contact Us</h2>
+    <p class="contact-intro">
+      Have a question, a request, or feedback? Send us a message and we’ll get back to you.
+    </p>
+
+    <!-- change action to formspree.io later -->
+    <form class="contact-form" action="mailto:hello@mugandmarker.com" method="POST">
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+
+      <div class="field">
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" type="text" required>
+      </div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+      </div>
+
+      <!-- Honeypot (basic spam protection) -->
+      <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <div class="contact-actions">
+        <button class="btn-pill contact-submit" type="submit">Send Message</button>
+        <a class="contact-mailto" href="mailto:hello@mugandmarker.com">Or email: hello@mugandmarker.com</a>
+      </div>
+    </form>
+
+    <div class="contact-meta" aria-label="Other ways to reach us">
+      <h3>Follow us</h3>
+      <p>Use the social links in the header (Instagram, Facebook, Bluesky, X, Patreon).</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <p>&copy; 2025 Mug &amp; Marker. All rights reserved.</p>
+</footer>
+</body>
+</html>

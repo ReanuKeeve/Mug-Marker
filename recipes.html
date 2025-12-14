@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/archives.css" />
+    <title>Mug & Marker - Recipes</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="/assets/logo.png" alt="Mug & Marker Logo" />
+        </a>
+        <h1>Mug & Marker</h1>
+      </div>
+      <div class="header">
+        <nav>
+          <ul>
+            <li><a href="comics.html">Comics</a></li>
+            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="worksheets.html">Worksheets</a></li>
+            <li><a href="contacts.html">Contact Us</a></li>
+          </ul>
+        </nav>
+        <div class="socials-header">
+          <a
+            href="https://www.instagram.com/mugandmarker/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/assets/instagram-icon.png" alt="Instagram Icon" />
+          </a>
+          <a
+            href="https://www.facebook.com/mugandmarker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/assets/facebook-icon.png" alt="Facebook Icon" />
+          </a>
+          <a
+            href="https://www.bluesky.com/mugandmarker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/assets/bluesky-icon.png" alt="bluesky Icon" />
+          </a>
+          <a
+            href="https://www.x.com/mugandmarker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/assets/x-icon.png" alt="x Icon" />
+          </a>
+          <a
+            href="https://www.reddit.com/mugandmarker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/assets/reddit-icon.png" alt="Patreon Icon" />
+          </a>
+        </div>
+      </div>
+    </header>
+    <main class="archive-page">
+      <section class="archive-box" aria-labelledby="recipes-archive-heading">
+        <h2 id="recipes-archive-heading">Recipes Archive</h2>
+        <div class="archive-controls" role="search">
+          <label class="sr-only" for="recipe-search">Search recipes</label>
+          <input
+            id="recipe-search"
+            class="archive-search"
+            type="search"
+            placeholder="Search recipes…"
+            autocomplete="off"
+          />
+
+          <div class="archive-controls-row">
+            <div
+              id="recipe-tags"
+              class="tag-chips"
+              aria-label="Filter recipes by tag"
+            ></div>
+
+            <label class="group-toggle">
+              <input type="checkbox" id="recipe-group-toggle" />
+              Group by tag
+            </label>
+
+            <button type="button" class="btn-clear" id="recipe-clear">
+              Clear
+            </button>
+          </div>
+
+          <p class="results-count" id="recipe-results" aria-live="polite"></p>
+        </div>
+        <div class="recipe-thumbnails" id="recipes-list"></div>
+      </section>
+    </main>
+    <footer role="contentinfo"></footer>
+    <script src="/scripts/archive.js"></script>
+  </body>
+</html>
