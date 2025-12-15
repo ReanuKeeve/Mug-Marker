@@ -128,7 +128,7 @@ async function initArchive(cfg) {
       const card = document.createElement('div');
 
       const link = document.createElement('a');
-      link.href = `/${pageType}.html?id=${item.id}`;
+      link.href = `${pageType}.html?id=${item.id}`;
 
       const img = document.createElement('img');
       img.src = item.image;
