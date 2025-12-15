@@ -17,7 +17,19 @@
             <h1>Mug & Marker</h1>
         </div>
         <div class="header">
-            <nav>
+            <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="site-nav"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+
+        <nav id="site-nav" class="site-nav">
                 <ul>
                     <li><a href="comics.html">Comics</a></li>
                     <li><a href="recipes.html">Recipes</a></li>
@@ -88,6 +100,7 @@
   </section>
 </main>
 <script src="scripts/contacts.js"></script>
+<script src="scripts/nav.js"></script>
 <footer class="site-footer" role="contentinfo">
   <p>&copy; 2025 Mug &amp; Marker. All rights reserved.</p>
 </footer>

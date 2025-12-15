@@ -193,3 +193,20 @@
   margin: 0.5rem 0 0.75rem;
   text-align: left;
 }
+
+@media (max-width: 600px) {
+  .comic-thumbnails,
+  .recipe-thumbnails,
+  .worksheets-thumbnails {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  }
+
+  .archive-page {
+    padding-top: 2rem;
+  }
+
+  .card img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+}

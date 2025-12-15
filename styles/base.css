@@ -341,3 +341,119 @@ footer {
   background: #eee;
   object-fit: cover;
 }
+
+header {
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+header nav ul {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+header nav a {
+  font-size: clamp(1.05rem, 4.5vw, 2rem);
+  padding: 0.25rem 0.4rem;
+}
+
+.logo-header {
+  width: clamp(52px, 14vw, 70px);
+}
+
+.socials-header a img {
+  width: clamp(26px, 8vw, 42px);
+  height: clamp(26px, 8vw, 42px);
+}
+
+@media (max-width: 420px) {
+  header {
+    padding: 0.6rem 0.75rem 0.85rem;
+  }
+
+  header nav ul {
+    justify-content: flex-start;
+  }
+}
+
+/* Detail pages */
+.detail-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.75rem 1rem 3rem;
+}
+
+.detail-page img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+@media (max-width: 600px) {
+  .detail-page {
+    padding: 1.25rem 0.9rem 2.5rem;
+  }
+}
+.nav-toggle {
+  display: none;
+  border: 2px solid var(--color-border, #222);
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 14px;
+  padding: 0.55rem 0.6rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-tiny, 0 2px 6px rgba(0,0,0,0.08));
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 26px;
+  height: 3px;
+  margin: 5px 0;
+  background: var(--color-border, #222);
+  border-radius: 999px;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+@media (max-width: 820px) {
+  .nav-toggle { display: inline-block; }
+
+  /* Hide nav by default on mobile */
+  .site-nav {
+    display: none;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border: 2px solid var(--color-border, #222);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: var(--shadow-small, 0 10px 22px rgba(0,0,0,0.10));
+  }
+
+  /* Show when open */
+  header.nav-open .site-nav {
+    display: block;
+  }
+
+  /* Make the nav list stack nicely */
+  header.nav-open nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+}
+
+/* Animate the hamburger into an X when open */
+header.nav-open .nav-toggle__bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+header.nav-open .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+header.nav-open .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle__bar { transition: none; }
+}
