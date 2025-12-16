@@ -3,27 +3,30 @@ const worksheetsList = document.getElementById('worksheets-list');
 const recipesList = document.getElementById('recipes-list');
 
 if (comicsList) {
-    fetch('data/comics.json')
-        .then(response => response.json())
-        .then(comics => {
-            comics.forEach(comic => {
-                const item = document.createElement('div');
-                const link = document.createElement('a');
-                const img = document.createElement('img');
-                img.src = comic.image;
-                img.alt = comic.title;
-                link.href = `comic.html?id=${comic.id}`;
-                link.appendChild(img);
-                item.appendChild(link);
+  fetch('data/comics.json')
+    .then(response => response.json())
+    .then(comics => {
+      comics.sort((a, b) =>
+        String(b.id).localeCompare(String(a.id), undefined, { numeric: true })
+      );
+      comics.forEach(comic => {
+        const item = document.createElement('div');
+        const link = document.createElement('a');
+        const img = document.createElement('img');
+        img.src = comic.image;
+        img.alt = comic.title;
+        link.href = `comic.html?id=${comic.id}`;
+        link.appendChild(img);
+        item.appendChild(link);
 
-                const title = document.createElement('h3');
-                title.textContent = comic.title;
-                item.appendChild(title);
+        const title = document.createElement('h3');
+        title.textContent = comic.title;
+        item.appendChild(title);
 
-                comicsList.appendChild(item);
-            });
-        })
-        .catch(err => console.error("Error loading comics:", err));
+        comicsList.appendChild(item);
+      });
+    })
+    .catch(err => console.error("Error loading comics:", err));
 }
 
 if (worksheetsList) {
@@ -64,8 +67,31 @@ async function initArchive(cfg) {
   const clearBtn = document.getElementById(clearBtnId);
   const resultsEl = document.getElementById(resultsId);
 
+
   const response = await fetch(jsonUrl);
   const rawItems = await response.json();
+
+  let tagsToggleBtn = null;
+
+  if (tagsWrap && tagsWrap.parentElement) {
+    tagsToggleBtn = document.createElement('button');
+    tagsToggleBtn.type = 'button';
+    tagsToggleBtn.className = 'tags-toggle';
+    tagsToggleBtn.setAttribute('aria-expanded', 'false');
+    tagsToggleBtn.textContent = 'Show tags';
+
+    // Start collapsed
+    tagsWrap.classList.add('is-collapsed');
+
+    // Insert button right before the tags container
+    tagsWrap.parentElement.insertBefore(tagsToggleBtn, tagsWrap);
+
+    tagsToggleBtn.addEventListener('click', () => {
+      const isCollapsed = tagsWrap.classList.toggle('is-collapsed');
+      tagsToggleBtn.textContent = isCollapsed ? 'Show tags' : 'Hide tags';
+      tagsToggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
+    });
+  }
 
   // Normalize tags: allow tags as array or string
   const items = rawItems.map(item => {
@@ -88,6 +114,9 @@ async function initArchive(cfg) {
       _search: searchBlobParts.join(' ').toLowerCase()
     };
   });
+  items.sort((a, b) =>
+    String(b.id).localeCompare(String(a.id), undefined, { numeric: true })
+  );
 
   // Build tag list
   const allTags = Array.from(
@@ -165,8 +194,8 @@ async function initArchive(cfg) {
       section.appendChild(h3);
 
       const grid = document.createElement('div');
-     
-      grid.className = listEl.className; 
+
+      grid.className = listEl.className;
       section.appendChild(grid);
 
       renderCards(grid, groups.get(tag));

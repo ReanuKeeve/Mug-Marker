@@ -18,57 +18,65 @@ async function initWorksheetPage() {
     return;
   }
 
-  const titleElem       = document.getElementById('worksheets-title');
-  const imageContainer  = document.getElementById('worksheet-image');
+  const titleElem = document.getElementById('worksheets-title');
+  const imageContainer = document.getElementById('worksheet-image');
   const descriptionElem = document.getElementById('worksheet-description');
-  const tagsElem        = document.getElementById('worksheet-tags');
+  const tagsElem = document.getElementById('worksheet-tags');
 
   if (titleElem) {
     titleElem.textContent = worksheet.title;
   }
 
   if (imageContainer) {
-  imageContainer.innerHTML = '';
+    imageContainer.innerHTML = '';
 
-  if (Array.isArray(worksheet.images)) {
-    worksheet.images.forEach(src => {
+    if (Array.isArray(worksheet.images)) {
+      worksheet.images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = worksheet.title;
+        imageContainer.appendChild(img);
+      });
+    } else if (worksheet.image) {
       const img = document.createElement('img');
-      img.src = src;
+      img.src = worksheet.image;
       img.alt = worksheet.title;
       imageContainer.appendChild(img);
-    });
-  } else if (worksheet.image) {
-    const img = document.createElement('img');
-    img.src = worksheet.image;
-    img.alt = worksheet.title;
-    imageContainer.appendChild(img);
+    }
   }
-}
 
   if (descriptionElem && worksheet.description) {
     descriptionElem.textContent = worksheet.description;
   }
 
   if (tagsElem && worksheet.tags) {
-    if (Array.isArray(worksheet.tags)) {
-      tagsElem.textContent = worksheet.tags.join(', ');
-    } else {
-      tagsElem.textContent = worksheet.tags;
-    }
+    tagsElem.innerHTML = '';
+    tagsElem.classList.add('tag-chips');
+
+    const tags = Array.isArray(worksheet.tags)
+      ? worksheet.tags
+      : String(worksheet.tags).split(',').map(t => t.trim()).filter(Boolean);
+
+    tags.forEach(tag => {
+      const chip = document.createElement('span');
+      chip.className = 'tag-chip tag-chip--static';
+      chip.textContent = tag;
+      tagsElem.appendChild(chip);
+    });
   }
 
   const filesList = document.getElementById('worksheet-files');
 
-if (filesList && Array.isArray(worksheet.files)) {
-  filesList.innerHTML = '';
-  worksheet.files.forEach(file => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = file.url;
-    a.textContent = file.label || 'Download';
-    a.download = '';
-    li.appendChild(a);
-    filesList.appendChild(li);
-  });
-}
+  if (filesList && Array.isArray(worksheet.files)) {
+    filesList.innerHTML = '';
+    worksheet.files.forEach(file => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = file.url;
+      a.textContent = file.label || 'Download';
+      a.download = '';
+      li.appendChild(a);
+      filesList.appendChild(li);
+    });
+  }
 }
