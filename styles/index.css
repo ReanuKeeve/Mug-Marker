@@ -153,6 +153,14 @@ main {
     .news {
         padding: 1rem 1rem 0.9rem;
     }
+
+    #next-link, #next-link-bottom {
+        content: "→";
+    }
+
+    #prev-link, #prev-link-bottom {
+        content: "←";
+    }
 }
 
 @media (min-width: 900px) {
