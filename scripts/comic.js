@@ -122,4 +122,27 @@ if (dictionaryBox && comic.dictionary) {
     const randomID = comics[randomIndex].id;
     randomBtnBot.href = `comic.html?id=${randomID}`;
   }
+
+  function simplifyComicNavForMobile() {
+  if (window.innerWidth > 430) return;
+
+  const replacements = {
+    'Prev': '<',
+    'Next': '>',
+  };
+
+  document.querySelectorAll('.comic-nav button, .comic-nav a').forEach(btn => {
+    const text = btn.textContent.trim();
+
+    if (replacements[text]) {
+      btn.dataset.fullLabel = text;           // store original
+      btn.textContent = replacements[text];
+      btn.setAttribute('aria-label', text);
+      btn.setAttribute('title', text);
+    }
+  });
+}
+
+simplifyComicNavForMobile();
+
 }

@@ -95,4 +95,27 @@ if (dictionaryBox && comic.dictionary) {
   const randomIndex = Math.floor(Math.random() * comics.length);
   const randomId = comics[randomIndex].id;
   setLinks(ids.rand, homeUrl(randomId), false);
+
+  function simplifyComicNavForMobile() {
+  if (window.innerWidth > 430) return;
+
+  const replacements = {
+    'Prev': '<',
+    'Next': '>',
+  };
+
+  document.querySelectorAll('.comic-nav button, .comic-nav a').forEach(btn => {
+    const text = btn.textContent.trim();
+
+    if (replacements[text]) {
+      btn.dataset.fullLabel = text;           // store original
+      btn.textContent = replacements[text];
+      btn.setAttribute('aria-label', text);
+      btn.setAttribute('title', text);
+    }
+  });
+}
+
+simplifyComicNavForMobile();
+
 }
