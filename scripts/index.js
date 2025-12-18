@@ -30,6 +30,25 @@ async function initHomeComic() {
   imageElem.src = comic.image;
   imageElem.alt = comic.alt || comic.title || 'Mug & Marker comic';
 
+  const dictionaryBox = document.getElementById('comic-dictionary');
+
+if (dictionaryBox && comic.dictionary) {
+  const { term, phonetic, pos, definitions } = comic.dictionary;
+
+  dictionaryBox.innerHTML = `
+    <div class="dict-term">
+      <strong>${term}</strong>
+      <span class="dict-phonetic">${phonetic}</span>
+      <span class="dict-pos">${pos}</span>
+    </div>
+    <ol class="dict-definitions">
+      ${definitions.map(d => `<li>${d}</li>`).join('')}
+    </ol>
+  `;
+
+  dictionaryBox.hidden = false;
+}
+
   // IDs for nav (top + bottom)
   const ids = {
     first: ['first-link', 'first-link-bottom'],

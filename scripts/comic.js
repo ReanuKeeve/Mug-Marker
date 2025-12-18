@@ -38,6 +38,26 @@ async function initComicPage() {
     altElem.textContent = comic.alt || '';
   }
 
+  const dictionaryBox = document.getElementById('comic-dictionary');
+
+if (dictionaryBox && comic.dictionary) {
+  const { term, phonetic, pos, definitions } = comic.dictionary;
+
+  dictionaryBox.innerHTML = `
+    <div class="dict-term">
+      <strong>${term}</strong>
+      <span class="dict-phonetic">${phonetic}</span>
+      <span class="dict-pos">${pos}</span>
+    </div>
+    <ol class="dict-definitions">
+      ${definitions.map(d => `<li>${d}</li>`).join('')}
+    </ol>
+  `;
+
+  dictionaryBox.hidden = false;
+}
+
+
   // Wire nav buttons
   const firstBtn  = document.getElementById('first-link');
   const prevBtn   = document.getElementById('prev-link');

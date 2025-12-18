@@ -29,11 +29,11 @@ const DATASETS = {
       const errors = [];
       const ids = new Set();
       items.forEach((it, i) => {
-        if (!it.id) errors.push(`Worksheet #${i+1}: missing id`);
+        if (!it.id) errors.push(`Worksheet #${i + 1}: missing id`);
         if (it.id && ids.has(it.id)) errors.push(`Duplicate id: ${it.id}`);
         ids.add(it.id);
-        if (!it.title) errors.push(`Worksheet ${it.id || '#'+(i+1)}: missing title`);
-        if (!it.image) errors.push(`Worksheet ${it.id || '#'+(i+1)}: missing thumbnail image`);
+        if (!it.title) errors.push(`Worksheet ${it.id || '#' + (i + 1)}: missing title`);
+        if (!it.image) errors.push(`Worksheet ${it.id || '#' + (i + 1)}: missing thumbnail image`);
         // soft warnings as errors? keep as warnings in manifest step; here we keep strict minimum.
       });
       return errors;
@@ -68,13 +68,13 @@ const DATASETS = {
       const errors = [];
       const ids = new Set();
       items.forEach((it, i) => {
-        if (!it.id) errors.push(`Recipe #${i+1}: missing id`);
+        if (!it.id) errors.push(`Recipe #${i + 1}: missing id`);
         if (it.id && ids.has(it.id)) errors.push(`Duplicate id: ${it.id}`);
         ids.add(it.id);
-        if (!it.title) errors.push(`Recipe ${it.id || '#'+(i+1)}: missing title`);
-        if (!it.image) errors.push(`Recipe ${it.id || '#'+(i+1)}: missing image`);
-        if (!Array.isArray(it.ingredients) || it.ingredients.filter(Boolean).length === 0) errors.push(`Recipe ${it.id || '#'+(i+1)}: ingredients empty`);
-        if (!it.instructions) errors.push(`Recipe ${it.id || '#'+(i+1)}: instructions empty`);
+        if (!it.title) errors.push(`Recipe ${it.id || '#' + (i + 1)}: missing title`);
+        if (!it.image) errors.push(`Recipe ${it.id || '#' + (i + 1)}: missing image`);
+        if (!Array.isArray(it.ingredients) || it.ingredients.filter(Boolean).length === 0) errors.push(`Recipe ${it.id || '#' + (i + 1)}: ingredients empty`);
+        if (!it.instructions) errors.push(`Recipe ${it.id || '#' + (i + 1)}: instructions empty`);
       });
       return errors;
     },
@@ -85,27 +85,40 @@ const DATASETS = {
 
   comics: {
     filename: 'comics.json',
-    hint: 'Fields: id, title, image, alt?, description?',
+    hint: 'Fields: id, title, image, alt?, description?, tags?, dictionary{term,phonetic,pos,definitions[]}',
     normalize(item) {
       const tags = normalizeTags(item.tags);
+
+      const dict = (item && typeof item.dictionary === 'object' && item.dictionary) ? item.dictionary : null;
+      const definitions = dict && Array.isArray(dict.definitions) ? dict.definitions.map(s => String(s).trim()).filter(Boolean) : [];
+
+      const dictionary = dict ? {
+        term: String(dict.term ?? '').trim(),
+        phonetic: String(dict.phonetic ?? '').trim(),
+        pos: String(dict.pos ?? '').trim(),
+        definitions
+      } : null;
+
       return {
         id: String(item.id ?? '').trim(),
         title: String(item.title ?? '').trim(),
         image: String(item.image ?? '').trim(),
         alt: String(item.alt ?? '').trim(),
         description: String(item.description ?? '').trim(),
-        tags
+        tags,
+        dictionary
       };
     },
+
     validate(items) {
       const errors = [];
       const ids = new Set();
       items.forEach((it, i) => {
-        if (!it.id) errors.push(`Comic #${i+1}: missing id`);
+        if (!it.id) errors.push(`Comic #${i + 1}: missing id`);
         if (it.id && ids.has(it.id)) errors.push(`Duplicate id: ${it.id}`);
         ids.add(it.id);
-        if (!it.title) errors.push(`Comic ${it.id || '#'+(i+1)}: missing title`);
-        if (!it.image) errors.push(`Comic ${it.id || '#'+(i+1)}: missing image`);
+        if (!it.title) errors.push(`Comic ${it.id || '#' + (i + 1)}: missing title`);
+        if (!it.image) errors.push(`Comic ${it.id || '#' + (i + 1)}: missing image`);
       });
       return errors;
     },
@@ -163,6 +176,11 @@ const rcpInstructions = el('rcp-instructions');
 // comics panel
 const cmcImage = el('cmc-image');
 const cmcAlt = el('cmc-alt');
+const cmcDictTerm = el('cmc-dict-term');
+const cmcDictPhonetic = el('cmc-dict-phonetic');
+const cmcDictPos = el('cmc-dict-pos');
+const cmcDictDefinitions = el('cmc-dict-definitions');
+
 
 const editorTitle = el('editor-title');
 const editorMeta = el('editor-meta');
@@ -313,6 +331,10 @@ function clearEditor() {
   rcpInstructions.value = '';
   cmcImage.value = '';
   cmcAlt.value = '';
+  cmcDictTerm.value = '';
+  cmcDictPhonetic.value = '';
+  cmcDictPos.value = '';
+  cmcDictDefinitions.value = '';
 }
 
 function showPanel(which) {
@@ -352,7 +374,7 @@ function renderList() {
 
     const meta = document.createElement('div');
     meta.className = 'item-meta';
-    const tagPreview = (Array.isArray(it.tags) && it.tags.length) ? ` • ${it.tags.slice(0,3).join(', ')}${it.tags.length>3?'…':''}` : '';
+    const tagPreview = (Array.isArray(it.tags) && it.tags.length) ? ` • ${it.tags.slice(0, 3).join(', ')}${it.tags.length > 3 ? '…' : ''}` : '';
     meta.textContent = `${it.id}${tagPreview}`;
 
     div.appendChild(title);
@@ -399,6 +421,13 @@ function renderEditor() {
   } else if (state.dataset === 'comics') {
     cmcImage.value = it.image || '';
     cmcAlt.value = it.alt || '';
+    const dict = it.dictionary && typeof it.dictionary === 'object' ? it.dictionary : null;
+
+    cmcDictTerm.value = dict ? (dict.term || '') : '';
+    cmcDictPhonetic.value = dict ? (dict.phonetic || '') : '';
+    cmcDictPos.value = dict ? (dict.pos || '') : '';
+    cmcDictDefinitions.value = (dict && Array.isArray(dict.definitions)) ? dict.definitions.join('\n') : '';
+
   }
 }
 
@@ -545,6 +574,60 @@ function bindCommonFieldHandlers() {
     it.alt = cmcAlt.value;
     markDirty();
   });
+  function ensureComicDictionary(it) {
+    if (!it.dictionary || typeof it.dictionary !== 'object') {
+      it.dictionary = { term: '', phonetic: '', pos: '', definitions: [] };
+    }
+  }
+
+  function cleanupComicDictionary(it) {
+    const d = it.dictionary;
+    if (!d) return;
+
+    const hasAnything =
+      (d.term && d.term.trim()) ||
+      (d.phonetic && d.phonetic.trim()) ||
+      (d.pos && d.pos.trim()) ||
+      (Array.isArray(d.definitions) && d.definitions.length);
+
+    if (!hasAnything) it.dictionary = null;
+  }
+
+  cmcDictTerm.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureComicDictionary(it);
+    it.dictionary.term = cmcDictTerm.value;
+    cleanupComicDictionary(it);
+    markDirty();
+  });
+
+  cmcDictPhonetic.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureComicDictionary(it);
+    it.dictionary.phonetic = cmcDictPhonetic.value;
+    cleanupComicDictionary(it);
+    markDirty();
+  });
+
+  cmcDictPos.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureComicDictionary(it);
+    it.dictionary.pos = cmcDictPos.value;
+    cleanupComicDictionary(it);
+    markDirty();
+  });
+
+  cmcDictDefinitions.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureComicDictionary(it);
+    it.dictionary.definitions = cmcDictDefinitions.value
+      .split(/\r?\n/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    cleanupComicDictionary(it);
+    markDirty();
+  });
+
 }
 
 // ---------- Actions ----------

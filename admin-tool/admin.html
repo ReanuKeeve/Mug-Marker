@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <base href="/Mug-Marker/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mug & Marker Admin Tool</title>
   <link rel="stylesheet" href="./admin.css" />
@@ -162,6 +163,35 @@
               <span>Alt text (optional)</span>
               <input id="cmc-alt" type="text" placeholder="Description for accessibility" />
             </label>
+
+            <div class="subpanel">
+  <div class="subpanel-head">
+    <div class="subpanel-title">Dictionary Entry (optional)</div>
+  </div>
+
+  <div class="grid">
+    <label class="field full">
+      <span>Term</span>
+      <input id="cmc-dict-term" type="text" placeholder="classroom management" />
+    </label>
+
+    <label class="field full">
+      <span>Phonetic</span>
+      <input id="cmc-dict-phonetic" type="text" placeholder="/ˈklɑːsruːm ˈmænɪdʒmənt/" />
+    </label>
+
+    <label class="field full">
+      <span>Part of speech</span>
+      <input id="cmc-dict-pos" type="text" placeholder="n." />
+    </label>
+
+    <label class="field full">
+      <span>Definitions (one per line)</span>
+      <textarea id="cmc-dict-definitions" rows="4" placeholder="Definition 1&#10;Definition 2"></textarea>
+    </label>
+  </div>
+</div>
+
           </div>
         </div>
 

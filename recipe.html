@@ -5,7 +5,7 @@
     <base href="/Mug-Marker/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/base.css" />
-    <title>Mug Marker - Recipie</title>
+    <title>Mug Marker - Recipe</title>
   </head>
   <body>
     <header>
@@ -75,14 +75,23 @@
       </div>
     </header>
     <main class="detail-page">
-      <section class="recipe-box" aria-labelledby="recipes-heading">
-        <h2 id="recipe-title">Loading...</h2>
-        <div class="recipe-content" id="recipe-content">
-          <div id="recipe-image"></div>
-          <div id="recipe-ingredients"></div>
-          <div id="recipe-instructions"></div>
-        </div>
-      </section>
+      <section class="recipe-box" id="recipe-box" aria-labelledby="recipe-title">
+    <h2 id="recipe-title">Loading…</h2>
+  <div class="recipe-sections" id="recipe-content">
+    <section class="recipe-section" id="recipe-media" aria-label="Recipe image">
+      <div id="recipe-image"></div>
+    </section>
+    <section class="recipe-section" id="recipe-description" aria-label="Description">
+    </section>
+    <section class="recipe-section" id="recipe-ingredients" aria-label="Ingredients">
+    </section>
+    <section class="recipe-section" id="recipe-method" aria-label="Method">
+    </section>
+    <section class="recipe-section" id="recipe-extras" aria-label="Extra pictures or notes">
+    </section>
+  </div>
+</section>
+
     </main>
     <footer role="contentinfo"></footer>
     <script src="scripts/recipe.js"></script>
