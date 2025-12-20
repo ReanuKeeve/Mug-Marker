@@ -88,10 +88,8 @@ const DATASETS = {
     hint: 'Fields: id, title, image, alt?, description?, tags?, dictionary{term,phonetic,pos,definitions[]}',
     normalize(item) {
       const tags = normalizeTags(item.tags);
-
       const dict = (item && typeof item.dictionary === 'object' && item.dictionary) ? item.dictionary : null;
       const definitions = dict && Array.isArray(dict.definitions) ? dict.definitions.map(s => String(s).trim()).filter(Boolean) : [];
-
       const dictionary = dict ? {
         term: String(dict.term ?? '').trim(),
         phonetic: String(dict.phonetic ?? '').trim(),
@@ -106,7 +104,8 @@ const DATASETS = {
         alt: String(item.alt ?? '').trim(),
         description: String(item.description ?? '').trim(),
         tags,
-        dictionary
+        dictionary,
+        news: String(item.news ?? '').trim()
       };
     },
 
@@ -180,6 +179,7 @@ const cmcDictTerm = el('cmc-dict-term');
 const cmcDictPhonetic = el('cmc-dict-phonetic');
 const cmcDictPos = el('cmc-dict-pos');
 const cmcDictDefinitions = el('cmc-dict-definitions');
+const cmcNews = el('cmc-news');
 
 
 const editorTitle = el('editor-title');
@@ -335,6 +335,7 @@ function clearEditor() {
   cmcDictPhonetic.value = '';
   cmcDictPos.value = '';
   cmcDictDefinitions.value = '';
+  cmcNews.value = '';
 }
 
 function showPanel(which) {
@@ -422,11 +423,11 @@ function renderEditor() {
     cmcImage.value = it.image || '';
     cmcAlt.value = it.alt || '';
     const dict = it.dictionary && typeof it.dictionary === 'object' ? it.dictionary : null;
-
     cmcDictTerm.value = dict ? (dict.term || '') : '';
     cmcDictPhonetic.value = dict ? (dict.phonetic || '') : '';
     cmcDictPos.value = dict ? (dict.pos || '') : '';
     cmcDictDefinitions.value = (dict && Array.isArray(dict.definitions)) ? dict.definitions.join('\n') : '';
+    cmcNews.value = it.news || '';
 
   }
 }
@@ -627,6 +628,13 @@ function bindCommonFieldHandlers() {
     cleanupComicDictionary(it);
     markDirty();
   });
+
+  cmcNews.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    it.news = cmcNews.value;
+    markDirty();
+  });
+
 
 }
 

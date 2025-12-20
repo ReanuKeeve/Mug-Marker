@@ -55,6 +55,19 @@ if (dictionaryBox && comic.dictionary) {
   `;
 
   dictionaryBox.hidden = false;
+
+}
+// News section
+const newsBox = document.getElementById('comic-news');
+if (newsBox) {
+  const news = (comic.news ?? '').toString().trim();
+  if (news) {
+    newsBox.textContent = news;
+    newsBox.hidden = false;
+  } else {
+    newsBox.textContent = '';
+    newsBox.hidden = true;
+  }
 }
 
 

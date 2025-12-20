@@ -49,6 +49,19 @@ if (dictionaryBox && comic.dictionary) {
   dictionaryBox.hidden = false;
 }
 
+  // --- News (optional, per-comic) ---
+  const newsBox = document.getElementById('comic-news');
+  if (newsBox) {
+    const news = (comic.news ?? '').toString().trim();
+    if (news) {
+      newsBox.textContent = news;
+      newsBox.hidden = false;
+    } else {
+      newsBox.textContent = '';
+      newsBox.hidden = true;
+    }
+  }
+  
   // IDs for nav (top + bottom)
   const ids = {
     first: ['first-link', 'first-link-bottom'],

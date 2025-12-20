@@ -1,210 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mug & Marker Admin Tool</title>
-  <link rel="stylesheet" href="./admin.css" />
-</head>
-<body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-title">Mug &amp; Marker — Admin Tool</div>
-      <div class="brand-subtitle">Local editor for comics, recipes, and worksheets (exports JSON + upload manifest)</div>
-    </div>
-
-    <div class="controls">
-      <label class="control">
-        <span>Dataset</span>
-        <select id="dataset-select" aria-label="Select dataset">
-          <option value="worksheets">Worksheets</option>
-          <option value="recipes">Recipes</option>
-          <option value="comics">Comics</option>
-        </select>
-      </label>
-
-      <div class="btn-row">
-        <button id="btn-load" class="btn" type="button">Load JSON</button>
-        <button id="btn-new" class="btn" type="button">New</button>
-        <button id="btn-duplicate" class="btn" type="button">Duplicate</button>
-        <button id="btn-delete" class="btn danger" type="button">Delete</button>
-        <button id="btn-export" class="btn primary" type="button">Export JSON</button>
-        <button id="btn-manifest" class="btn" type="button">Export Manifest</button>
+  <head>
+    <meta charset="UTF-8" />
+    <base href="/Mug-Marker/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mug & Marker Admin Tool</title>
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-title">Mug &amp; Marker — Admin Tool</div>
+        <div class="brand-subtitle">
+          Local editor for comics, recipes, and worksheets (exports JSON +
+          upload manifest)
+        </div>
       </div>
-    </div>
-  </header>
 
-  <main class="app">
-    <aside class="sidebar">
-      <div class="sidebar-top">
-        <label class="search">
-          <span class="sr-only">Search</span>
-          <input id="search" type="search" placeholder="Search title, tags, id…" autocomplete="off" />
+      <div class="controls">
+        <label class="control">
+          <span>Dataset</span>
+          <select id="dataset-select" aria-label="Select dataset">
+            <option value="worksheets">Worksheets</option>
+            <option value="recipes">Recipes</option>
+            <option value="comics">Comics</option>
+          </select>
         </label>
-        <div class="hint" id="dataset-hint"></div>
+
+        <div class="btn-row">
+          <button id="btn-load" class="btn" type="button">Load JSON</button>
+          <button id="btn-new" class="btn" type="button">New</button>
+          <button id="btn-duplicate" class="btn" type="button">
+            Duplicate
+          </button>
+          <button id="btn-delete" class="btn danger" type="button">
+            Delete
+          </button>
+          <button id="btn-export" class="btn primary" type="button">
+            Export JSON
+          </button>
+          <button id="btn-manifest" class="btn" type="button">
+            Export Manifest
+          </button>
+        </div>
       </div>
+    </header>
 
-      <div class="list" id="item-list" role="listbox" aria-label="Items"></div>
+    <main class="app">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <label class="search">
+            <span class="sr-only">Search</span>
+            <input
+              id="search"
+              type="search"
+              placeholder="Search title, tags, id…"
+              autocomplete="off"
+            />
+          </label>
+          <div class="hint" id="dataset-hint"></div>
+        </div>
 
-      <div class="sidebar-bottom">
-        <div class="status" id="status" aria-live="polite"></div>
-      </div>
-    </aside>
+        <div
+          class="list"
+          id="item-list"
+          role="listbox"
+          aria-label="Items"
+        ></div>
 
-    <section class="editor">
-      <div class="banner hidden" id="banner"></div>
+        <div class="sidebar-bottom">
+          <div class="status" id="status" aria-live="polite"></div>
+        </div>
+      </aside>
 
-      <form id="editor-form" class="editor-form" autocomplete="off">
-        <div class="editor-header">
-          <div>
-            <div class="editor-title" id="editor-title">No item selected</div>
-            <div class="editor-meta" id="editor-meta"></div>
+      <section class="editor">
+        <div class="banner hidden" id="banner"></div>
+
+        <form id="editor-form" class="editor-form" autocomplete="off">
+          <div class="editor-header">
+            <div>
+              <div class="editor-title" id="editor-title">No item selected</div>
+              <div class="editor-meta" id="editor-meta"></div>
+            </div>
+            <div
+              class="pill"
+              id="unsaved-pill"
+              title="Draft is autosaved locally"
+            >
+              Autosave
+            </div>
           </div>
-          <div class="pill" id="unsaved-pill" title="Draft is autosaved locally">Autosave</div>
-        </div>
-
-        <div class="grid">
-          <label class="field">
-            <span>ID</span>
-            <input id="field-id" type="text" disabled />
-          </label>
-
-          <label class="field">
-            <span>Title</span>
-            <input id="field-title" type="text" required />
-          </label>
-
-          <label class="field">
-            <span>Tags (comma-separated)</span>
-            <input id="field-tags" type="text" placeholder="e.g. literacy, ages 5-6" />
-          </label>
-
-          <label class="field full">
-            <span>Description</span>
-            <textarea id="field-description" rows="3" placeholder="Short description…"></textarea>
-          </label>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Dataset-specific areas -->
-        <div id="panel-worksheets" class="panel hidden" aria-label="Worksheet fields">
-          <div class="panel-title">Worksheet Media</div>
 
           <div class="grid">
+            <label class="field">
+              <span>ID</span>
+              <input id="field-id" type="text" disabled />
+            </label>
+
+            <label class="field">
+              <span>Title</span>
+              <input id="field-title" type="text" required />
+            </label>
+
+            <label class="field">
+              <span>Tags (comma-separated)</span>
+              <input
+                id="field-tags"
+                type="text"
+                placeholder="e.g. literacy, ages 5-6"
+              />
+            </label>
+
             <label class="field full">
-              <span>Thumbnail image URL (used in archive)</span>
-              <input id="ws-thumb" type="text" placeholder="assets/worksheets/w-001/w-001-1.png" />
+              <span>Description</span>
+              <textarea
+                id="field-description"
+                rows="3"
+                placeholder="Short description…"
+              ></textarea>
             </label>
           </div>
 
-          <div class="subpanel">
-            <div class="subpanel-head">
-              <div class="subpanel-title">Gallery images</div>
-              <button class="btn small" id="ws-add-image" type="button">Add image</button>
+          <div class="divider"></div>
+
+          <!-- Dataset-specific areas -->
+          <div
+            id="panel-worksheets"
+            class="panel hidden"
+            aria-label="Worksheet fields"
+          >
+            <div class="panel-title">Worksheet Media</div>
+
+            <div class="grid">
+              <label class="field full">
+                <span>Thumbnail image URL (used in archive)</span>
+                <input
+                  id="ws-thumb"
+                  type="text"
+                  placeholder="assets/worksheets/w-001/w-001-1.png"
+                />
+              </label>
             </div>
-            <div id="ws-images" class="rows"></div>
-          </div>
-
-          <div class="subpanel">
-            <div class="subpanel-head">
-              <div class="subpanel-title">Download files</div>
-              <button class="btn small" id="ws-add-file" type="button">Add file</button>
-            </div>
-            <div id="ws-files" class="rows"></div>
-          </div>
-        </div>
-
-        <div id="panel-recipes" class="panel hidden" aria-label="Recipe fields">
-          <div class="panel-title">Recipe Content</div>
-
-          <div class="grid">
-            <label class="field full">
-              <span>Image URL</span>
-              <input id="rcp-image" type="text" placeholder="assets/recipes/r-001.jpg" />
-            </label>
-
-            <label class="field full">
-              <span>Alt text (optional)</span>
-              <input id="rcp-alt" type="text" placeholder="Description for accessibility" />
-            </label>
-          </div>
-
-          <div class="subpanel">
-            <div class="subpanel-head">
-              <div class="subpanel-title">Ingredients (one per line)</div>
-            </div>
-            <label class="field full">
-              <textarea id="rcp-ingredients" rows="6" placeholder="1 cup flour&#10;2 eggs&#10;…"></textarea>
-            </label>
-          </div>
-
-          <div class="subpanel">
-            <div class="subpanel-head">
-              <div class="subpanel-title">Instructions</div>
-            </div>
-            <label class="field full">
-              <textarea id="rcp-instructions" rows="8" placeholder="Step 1…&#10;Step 2…"></textarea>
-            </label>
-          </div>
-        </div>
-
-        <div id="panel-comics" class="panel hidden" aria-label="Comic fields">
-          <div class="panel-title">Comic Content</div>
-
-          <div class="grid">
-            <label class="field full">
-              <span>Image URL</span>
-              <input id="cmc-image" type="text" placeholder="assets/comics/003.png" />
-            </label>
-
-            <label class="field full">
-              <span>Alt text (optional)</span>
-              <input id="cmc-alt" type="text" placeholder="Description for accessibility" />
-            </label>
 
             <div class="subpanel">
-  <div class="subpanel-head">
-    <div class="subpanel-title">Dictionary Entry (optional)</div>
-  </div>
+              <div class="subpanel-head">
+                <div class="subpanel-title">Gallery images</div>
+                <button class="btn small" id="ws-add-image" type="button">
+                  Add image
+                </button>
+              </div>
+              <div id="ws-images" class="rows"></div>
+            </div>
 
-  <div class="grid">
-    <label class="field full">
-      <span>Term</span>
-      <input id="cmc-dict-term" type="text" placeholder="classroom management" />
-    </label>
-
-    <label class="field full">
-      <span>Phonetic</span>
-      <input id="cmc-dict-phonetic" type="text" placeholder="/ˈklɑːsruːm ˈmænɪdʒmənt/" />
-    </label>
-
-    <label class="field full">
-      <span>Part of speech</span>
-      <input id="cmc-dict-pos" type="text" placeholder="n." />
-    </label>
-
-    <label class="field full">
-      <span>Definitions (one per line)</span>
-      <textarea id="cmc-dict-definitions" rows="4" placeholder="Definition 1&#10;Definition 2"></textarea>
-    </label>
-  </div>
-</div>
-
+            <div class="subpanel">
+              <div class="subpanel-head">
+                <div class="subpanel-title">Download files</div>
+                <button class="btn small" id="ws-add-file" type="button">
+                  Add file
+                </button>
+              </div>
+              <div id="ws-files" class="rows"></div>
+            </div>
           </div>
-        </div>
 
-        <div class="divider"></div>
+          <div
+            id="panel-recipes"
+            class="panel hidden"
+            aria-label="Recipe fields"
+          >
+            <div class="panel-title">Recipe Content</div>
 
-        <div class="footer-note">
-          This tool runs locally in your browser and cannot upload or modify server files. Use “Export JSON” and replace the site’s <code>/data/*.json</code> files.
-        </div>
-      </form>
-    </section>
-  </main>
+            <div class="grid">
+              <label class="field full">
+                <span>Image URL</span>
+                <input
+                  id="rcp-image"
+                  type="text"
+                  placeholder="assets/recipes/r-001.jpg"
+                />
+              </label>
 
-  <input id="file-input" type="file" accept=".json,application/json" class="hidden" />
+              <label class="field full">
+                <span>Alt text (optional)</span>
+                <input
+                  id="rcp-alt"
+                  type="text"
+                  placeholder="Description for accessibility"
+                />
+              </label>
+            </div>
 
-  <script src="./admin.js"></script>
-</body>
+            <div class="subpanel">
+              <div class="subpanel-head">
+                <div class="subpanel-title">Ingredients (one per line)</div>
+              </div>
+              <label class="field full">
+                <textarea
+                  id="rcp-ingredients"
+                  rows="6"
+                  placeholder="1 cup flour&#10;2 eggs&#10;…"
+                ></textarea>
+              </label>
+            </div>
+
+            <div class="subpanel">
+              <div class="subpanel-head">
+                <div class="subpanel-title">Instructions</div>
+              </div>
+              <label class="field full">
+                <textarea
+                  id="rcp-instructions"
+                  rows="8"
+                  placeholder="Step 1…&#10;Step 2…"
+                ></textarea>
+              </label>
+            </div>
+          </div>
+
+          <div id="panel-comics" class="panel hidden" aria-label="Comic fields">
+            <div class="panel-title">Comic Content</div>
+
+            <div class="grid">
+              <label class="field full">
+                <span>Image URL</span>
+                <input
+                  id="cmc-image"
+                  type="text"
+                  placeholder="assets/comics/003.png"
+                />
+              </label>
+
+              <label class="field full">
+                <span>Alt text (optional)</span>
+                <input
+                  id="cmc-alt"
+                  type="text"
+                  placeholder="Description for accessibility"
+                />
+              </label>
+
+              <div class="subpanel">
+                <div class="subpanel-head">
+                  <div class="subpanel-title">Dictionary Entry (optional)</div>
+                </div>
+
+                <div class="grid">
+                  <label class="field full">
+                    <span>Term</span>
+                    <input
+                      id="cmc-dict-term"
+                      type="text"
+                      placeholder="classroom management"
+                    />
+                  </label>
+
+                  <label class="field full">
+                    <span>Phonetic</span>
+                    <input
+                      id="cmc-dict-phonetic"
+                      type="text"
+                      placeholder="/ˈklɑːsruːm ˈmænɪdʒmənt/"
+                    />
+                  </label>
+
+                  <label class="field full">
+                    <span>Part of speech</span>
+                    <input id="cmc-dict-pos" type="text" placeholder="n." />
+                  </label>
+
+                  <label class="field full">
+                    <span>Definitions (one per line)</span>
+                    <textarea
+                      id="cmc-dict-definitions"
+                      rows="4"
+                      placeholder="Definition 1&#10;Definition 2"
+                    ></textarea>
+                  </label>
+                  <label class="field full">
+                    <span>News (optional)</span>
+                    <textarea
+                      id="cmc-news"
+                      rows="4"
+                      placeholder="Short update for this comic…"
+                    ></textarea>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="footer-note">
+            This tool runs locally in your browser and cannot upload or modify
+            server files. Use “Export JSON” and replace the site’s
+            <code>/data/*.json</code> files.
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <input
+      id="file-input"
+      type="file"
+      accept=".json,application/json"
+      class="hidden"
+    />
+
+    <script src="./admin.js"></script>
+  </body>
 </html>
