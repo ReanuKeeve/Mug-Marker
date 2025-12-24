@@ -74,27 +74,32 @@
         </div>
       </div>
     </header>
-    <main class="detail-page">
+        <main class="detail-page">
+      <button class="btn" id="back-button">Back to Recipes</button>
       <section class="recipe-box" id="recipe-box" aria-labelledby="recipe-title">
-    <h2 id="recipe-title">Loading…</h2>
-  <div class="recipe-sections" id="recipe-content">
-    <section class="recipe-section" id="recipe-media" aria-label="Recipe image">
-      <div id="recipe-image"></div>
-    </section>
-    <section class="recipe-section" id="recipe-description" aria-label="Description">
-    </section>
-    <section class="recipe-section" id="recipe-ingredients" aria-label="Ingredients">
-    </section>
-    <section class="recipe-section" id="recipe-method" aria-label="Method">
-    </section>
-    <section class="recipe-section" id="recipe-extras" aria-label="Extra pictures or notes">
-    </section>
-  </div>
-</section>
-
+        <h2 id="recipe-title">Loading…</h2>
+        <div id="recipe-tags" class="tag-chips"></div>
+        <div class="recipe-sections" id="recipe-content">
+          <section class="recipe-section" id="recipe-media" aria-label="Recipe image">
+            <div id="recipe-image"></div>
+          </section>
+          <section class="recipe-section" id="recipe-description" aria-label="Description">
+          </section>
+          <section class="recipe-section" id="recipe-ingredients" aria-label="Ingredients">
+          </section>
+          <section class="recipe-section" id="recipe-equipment" aria-label="Equipment">
+          </section>
+          <section class="recipe-section" id="recipe-method" aria-label="Method">
+          </section>
+          <section class="recipe-section" id="recipe-extras" aria-label="Extra pictures or notes">
+          </section>
+        </div>
+      </section>
     </main>
     <footer role="contentinfo"></footer>
     <script src="scripts/recipe.js"></script>
     <script src="scripts/nav.js"></script>
   </body>
 </html>
+
+

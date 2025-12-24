@@ -79,4 +79,11 @@ async function initWorksheetPage() {
       filesList.appendChild(li);
     });
   }
+
+  const backBtn = document.getElementById('back-button');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      window.location.href = 'worksheets.html';
+    });
+  }
 }

@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <base href="/Mug-Marker/" />
+ 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mug & Marker Admin Tool</title>
-    <link rel="stylesheet" href="./admin.css" />
+    <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
     <header class="topbar">
@@ -205,6 +205,18 @@
 
             <div class="subpanel">
               <div class="subpanel-head">
+                <div class="subpanel-title">Equipment (one per line)</div>
+              </div>
+              <label class="field full">
+                <textarea
+                  id="rcp-equipment"
+                  rows="4"
+                  placeholder="Mixing bowl&#10;Whisk&#10;…"
+                ></textarea>
+              </label>
+
+            <div class="subpanel">
+              <div class="subpanel-head">
                 <div class="subpanel-title">Instructions</div>
               </div>
               <label class="field full">
@@ -307,6 +319,6 @@
       class="hidden"
     />
 
-    <script src="./admin.js"></script>
+    <script src="admin.js"></script>
   </body>
 </html>

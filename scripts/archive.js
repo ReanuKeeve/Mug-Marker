@@ -38,7 +38,8 @@ if (worksheetsList) {
     tagsWrapId: 'worksheet-tags',
     groupToggleId: 'worksheet-group-toggle',
     clearBtnId: 'worksheet-clear',
-    resultsId: 'worksheet-results'
+    resultsId: 'worksheet-results',
+    randomButtonId: 'random-worksheet-button'
   });
 }
 
@@ -51,14 +52,15 @@ if (recipesList) {
     tagsWrapId: 'recipe-tags',
     groupToggleId: 'recipe-group-toggle',
     clearBtnId: 'recipe-clear',
-    resultsId: 'recipe-results'
+    resultsId: 'recipe-results',
+    randomButtonId: 'random-recipe-button'
   });
 }
 
 async function initArchive(cfg) {
   const {
     listEl, jsonUrl, pageType,
-    searchInputId, tagsWrapId, groupToggleId, clearBtnId, resultsId
+    searchInputId, tagsWrapId, groupToggleId, clearBtnId, resultsId, randomButtonId
   } = cfg;
 
   const searchEl = document.getElementById(searchInputId);
@@ -247,6 +249,17 @@ async function initArchive(cfg) {
       [...tagsWrap.querySelectorAll('.tag-chip')].forEach(b => b.setAttribute('aria-pressed', 'false'));
       render();
     });
+  }
+
+  if (randomButtonId) {
+    const randomBtn = document.getElementById(randomButtonId);
+    if (randomBtn) {
+      randomBtn.addEventListener('click', () => {
+        if (!items.length) return;
+        const randomItem = items[Math.floor(Math.random() * items.length)];
+        window.location.href = `${pageType}.html?id=${randomItem.id}`;
+      });
+    }
   }
 
   render();

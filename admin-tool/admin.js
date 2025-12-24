@@ -49,10 +49,11 @@ const DATASETS = {
 
   recipes: {
     filename: 'recipes.json',
-    hint: 'Fields: id, title, image, alt?, tags?, ingredients[], instructions',
+    hint: 'Fields: id, title, image, alt?, tags?, ingredients[], equipment[], instructions',
     normalize(item) {
       const tags = normalizeTags(item.tags);
       const ingredients = Array.isArray(item.ingredients) ? item.ingredients.map(s => String(s)) : [];
+      const equipment = Array.isArray(item.equipment) ? item.equipment.map(s => String(s)) : [];
       return {
         id: String(item.id ?? '').trim(),
         title: String(item.title ?? '').trim(),
@@ -61,6 +62,7 @@ const DATASETS = {
         description: String(item.description ?? '').trim(), // optional (not used by your recipe.js but useful)
         tags,
         ingredients,
+        equipment,
         instructions: String(item.instructions ?? '').trim()
       };
     },
@@ -74,6 +76,7 @@ const DATASETS = {
         if (!it.title) errors.push(`Recipe ${it.id || '#' + (i + 1)}: missing title`);
         if (!it.image) errors.push(`Recipe ${it.id || '#' + (i + 1)}: missing image`);
         if (!Array.isArray(it.ingredients) || it.ingredients.filter(Boolean).length === 0) errors.push(`Recipe ${it.id || '#' + (i + 1)}: ingredients empty`);
+        if (!Array.isArray(it.equipment) || it.equipment.filter(Boolean).length === 0) errors.push(`Recipe ${it.id || '#' + (i + 1)}: equipment empty`);
         if (!it.instructions) errors.push(`Recipe ${it.id || '#' + (i + 1)}: instructions empty`);
       });
       return errors;
@@ -170,6 +173,7 @@ const wsAddFileBtn = el('ws-add-file');
 const rcpImage = el('rcp-image');
 const rcpAlt = el('rcp-alt');
 const rcpIngredients = el('rcp-ingredients');
+const rcpEquipment = el('rcp-equipment');
 const rcpInstructions = el('rcp-instructions');
 
 // comics panel
@@ -328,6 +332,7 @@ function clearEditor() {
   rcpImage.value = '';
   rcpAlt.value = '';
   rcpIngredients.value = '';
+  rcpEquipment.value = '';
   rcpInstructions.value = '';
   cmcImage.value = '';
   cmcAlt.value = '';
@@ -418,6 +423,7 @@ function renderEditor() {
     rcpImage.value = it.image || '';
     rcpAlt.value = it.alt || '';
     rcpIngredients.value = Array.isArray(it.ingredients) ? it.ingredients.join('\n') : '';
+    rcpEquipment.value = Array.isArray(it.equipment) ? it.equipment.join('\n') : '';
     rcpInstructions.value = it.instructions || '';
   } else if (state.dataset === 'comics') {
     cmcImage.value = it.image || '';
@@ -557,6 +563,12 @@ function bindCommonFieldHandlers() {
     markDirty();
   });
 
+  rcpEquipment.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    it.equipment = rcpEquipment.value.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    markDirty();
+  });
+
   rcpInstructions.addEventListener('input', () => {
     const it = getSelected(); if (!it) return;
     it.instructions = rcpInstructions.value;
@@ -678,6 +690,7 @@ function onNewItem() {
   }
   if (ds === 'recipes') {
     blank.ingredients = [];
+    blank.equipment = [];
     blank.instructions = '';
     blank.image = '';
     blank.alt = '';

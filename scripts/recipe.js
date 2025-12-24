@@ -7,7 +7,7 @@ async function initRecipePage() {
   const id = params.get('id');
   if (!id) return;
 
-  const response = await fetch('/data/recipes.json');
+  const response = await fetch('data/recipes.json');
   const recipes = await response.json();
 
   const recipe = recipes.find(r => r.id === id);
@@ -16,7 +16,9 @@ async function initRecipePage() {
   const titleElem = document.getElementById('recipe-title');
   const imageContainer = document.getElementById('recipe-image');
   const descSection = document.getElementById('recipe-description');
+  const tagsSection = document.getElementById('recipe-tags');
   const ingredientsSection = document.getElementById('recipe-ingredients');
+  const equipmentSection = document.getElementById('recipe-equipment');
   const methodSection = document.getElementById('recipe-method');
   const extrasSection = document.getElementById('recipe-extras');
 
@@ -70,6 +72,45 @@ async function initRecipePage() {
     }
   }
 
+  // Tags
+  if (tagsSection) {
+    tagsSection.innerHTML = '';
+    const tags = Array.isArray(recipe.tags) ? recipe.tags : [];
+    if (tags.length) {
+      tagsSection.style.display = '';
+      tags.forEach(tag => {
+        const chip = document.createElement('a');
+        chip.className = 'tag-chip';
+        chip.href = `recipes.html?tag=${encodeURIComponent(tag)}`;
+        chip.textContent = tag;
+        tagsSection.appendChild(chip);
+      });
+    } else {
+      tagsSection.style.display = 'none';
+    }
+  }
+
+  // Equipment
+  if (equipmentSection) {
+    equipmentSection.innerHTML = '';
+    const h = document.createElement('h3');
+    h.textContent = 'Equipment';
+    equipmentSection.appendChild(h);
+
+    if (Array.isArray(recipe.equipment) && recipe.equipment.length) {
+      const ul = document.createElement('ul');
+      recipe.equipment.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      equipmentSection.appendChild(ul);
+      equipmentSection.style.display = '';
+    } else {
+      equipmentSection.style.display = 'none';
+    }
+  }
+
   // Method (instructions)
   if (methodSection) {
     methodSection.innerHTML = '';
@@ -120,4 +161,7 @@ async function initRecipePage() {
       }
     }
   }
+  document.getElementById("back-button").addEventListener("click", () => {
+  window.location.href = "recipes.html";
+});
 }
