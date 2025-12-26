@@ -2,19 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <base href="/Mug-Marker/">
+    <title>404 – Page not found</title>
+
+    <base href="/Mug-Marker/">   
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/index.css" />
-    <title>Mug Marker - Comic</title>
   </head>
   <body>
+    <!-- reuse header if you already include it everywhere -->
     <header>
       <div class="logo">
         <a href="index.html">
           <img src="assets/logo.png" alt="Mug & Marker Logo" />
         </a>
-        <h1>Mug Marker</h1>
+        <a href="index.html"> </a>
+        <h1 id="site-title">Mug Marker</h1>
         <button
           class="nav-toggle"
           type="button"
@@ -75,54 +81,17 @@
         </div>
       </div>
     </header>
-    <main class="detail-page">
-      <section class="comic-box">
-        <h2 id="comic-title">Loading…</h2>
-        <ul class="comic-nav">
-          <li><a id="first-link" href="#">|&lt;</a></li>
-          <li>
-            <a id="prev-link" rel="prev" href="#" accesskey="p">Prev</a>
-          </li>
-          <li><a id="random-link" href="#">RNG</a></li>
-          <li>
-            <a id="next-link" rel="next" href="#" accesskey="n">Next</a>
-          </li>
-          <li><a id="last-link" href="#">&gt;|</a></li>
-        </ul>
-        <div class="comic-image-wrapper">
-          <img
-            src="assets/comics/003.PNG"
-            id="comic-image"
-            alt="Current placeholder comic"
-          />
-        </div>
-        <section
-          id="comic-dictionary"
-          class="comic-dictionary"
-          hidden
-        ></section>
-        <ul class="comic-nav">
-          <li><a id="first-link-bottom" href="#">|&lt;</a></li>
-          <li>
-            <a id="prev-link-bottom" rel="prev" href="#" accesskey="p"
-              >Prev</a
-            >
-          </li>
-          <li><a id="random-link-bottom" href="#">RNG</a></li>
-          <li>
-            <a id="next-link-bottom" rel="next" href="#" accesskey="n"
-              >Next</a
-            >
-          </li>
-          <li><a id="last-link-bottom" href="#">&gt;|</a></li>
-        </ul>
-      </section>
-      <section id="comic-news" class="comic-news" hidden></section>
+
+    <main class="not-found">
+      <h1>404</h1>
+      <p>That page doesn’t exist.</p>
+
+      <a href="index.html" class="btn">Back to home</a>
     </main>
+
+    <!-- reuse footer if present -->
     <footer>
-      <p>&copy; 2024 Mug & Marker. All rights reserved.</p>
+      <!-- existing footer -->
     </footer>
-    <script src="scripts/comic.js"></script>
-    <script src="scripts/nav.js"></script>
   </body>
 </html>

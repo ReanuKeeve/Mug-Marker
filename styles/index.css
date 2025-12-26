@@ -247,3 +247,20 @@ main {
     text-align: center;
     font-weight: 600;
 }
+
+
+.not-found {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.not-found h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--lavender-dark);
+}
+
+.not-found p {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
