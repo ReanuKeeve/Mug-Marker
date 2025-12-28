@@ -251,16 +251,7 @@ async function initArchive(cfg) {
     });
   }
 
-  if (randomButtonId) {
-    const randomBtn = document.getElementById(randomButtonId);
-    if (randomBtn) {
-      randomBtn.addEventListener('click', () => {
-        if (!items.length) return;
-        const randomItem = items[Math.floor(Math.random() * items.length)];
-        window.location.href = `${pageType}.html?id=${randomItem.id}`;
-      });
-    }
-  }
+  
 
   render();
 }

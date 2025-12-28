@@ -127,7 +127,68 @@ const DATASETS = {
     manifestPaths(item) {
       return [item.image].filter(Boolean);
     }
+  },
+  updates: {
+  filename: 'updates.json',
+  hint: 'Fields: id, title, date, body, image?, alt?, link{label,href}?, pinned?, published?',
+  normalize(item) {
+    const link = (item && typeof item.link === 'object' && item.link) ? item.link : null;
+
+    const image = String(item.image ?? '').trim();
+    const alt = String(item.alt ?? '').trim();
+
+    const linkLabel = link ? String(link.label ?? '').trim() : '';
+    const linkHref = link ? String(link.href ?? '').trim() : '';
+    const linkTarget = link ? String(link.target ?? '').trim() : '';
+    const linkRel = link ? String(link.rel ?? '').trim() : '';
+
+    const normalizedLink =
+      (linkLabel || linkHref || linkTarget || linkRel)
+        ? { label: linkLabel, href: linkHref, target: linkTarget, rel: linkRel }
+        : null;
+
+    return {
+      id: String(item.id ?? '').trim(),
+      title: String(item.title ?? '').trim(),
+      date: String(item.date ?? '').trim(),
+      body: String(item.body ?? '').trim(),
+      image,
+      alt,
+      link: normalizedLink,
+      pinned: toBool(item.pinned, false),
+      published: toBool(item.published, true)
+    };
+  },
+  validate(items) {
+    const errors = [];
+    const ids = new Set();
+
+    items.forEach((it, i) => {
+      if (!it.id) errors.push(`Update #${i + 1}: missing id`);
+      if (it.id && ids.has(it.id)) errors.push(`Duplicate id: ${it.id}`);
+      ids.add(it.id);
+
+      if (!it.title) errors.push(`Update ${it.id || '#' + (i + 1)}: missing title`);
+      if (!it.date) errors.push(`Update ${it.id || '#' + (i + 1)}: missing date`);
+      if (!it.body) errors.push(`Update ${it.id || '#' + (i + 1)}: missing body`);
+
+      if (it.image && !it.alt) errors.push(`Update ${it.id || '#' + (i + 1)}: alt required when image is set`);
+
+      if (it.link) {
+        if (!it.link.href) errors.push(`Update ${it.id || '#' + (i + 1)}: link href missing`);
+        if (!it.link.label) errors.push(`Update ${it.id || '#' + (i + 1)}: link label missing`);
+        if (it.link.target === '_blank' && !it.link.rel) {
+          errors.push(`Update ${it.id || '#' + (i + 1)}: add rel (e.g. noopener) when target is _blank`);
+        }
+      }
+    });
+
+    return errors;
+  },
+  manifestPaths(item) {
+    return [item.image].filter(Boolean);
   }
+  } 
 };
 
 const STORAGE_KEY = 'mm_admin_tool_v1';
@@ -159,7 +220,8 @@ const fieldDescription = el('field-description');
 const panels = {
   worksheets: el('panel-worksheets'),
   recipes: el('panel-recipes'),
-  comics: el('panel-comics')
+  comics: el('panel-comics'),
+  updates: el('panel-updates')
 };
 
 // worksheet panel
@@ -188,6 +250,18 @@ const cmcNews = el('cmc-news');
 
 const editorTitle = el('editor-title');
 const editorMeta = el('editor-meta');
+
+// updates panel
+const updDate = el('upd-date');
+const updBody = el('upd-body');
+const updImage = el('upd-image');
+const updAlt = el('upd-alt');
+const updLinkLabel = el('upd-link-label');
+const updLinkHref = el('upd-link-href');
+const updLinkTarget = el('upd-link-target');
+const updLinkRel = el('upd-link-rel');
+const updPinned = el('upd-pinned');
+const updPublished = el('upd-published');
 
 // buttons
 el('btn-load').addEventListener('click', () => fileInput.click());
@@ -237,6 +311,12 @@ function normalizeTags(tags) {
     return s.split(',').map(t => t.trim()).filter(Boolean);
   }
   return [];
+}
+
+function toBool(value, defaultValue = false) {
+  if (value === undefined || value === null || value === '') return defaultValue;
+  if (typeof value === 'string') return value.toLowerCase() === 'true';
+  return Boolean(value);
 }
 
 function setBanner(message, kind = 'error') {
@@ -303,7 +383,7 @@ function restoreFromStorage() {
 function slugifyId(prefix) {
   const n = state.items.length + 1;
   const padded = String(n).padStart(3, '0');
-  const map = { worksheets: 'w', recipes: 'r', comics: 'c' };
+  const map = { worksheets: 'w', recipes: 'r', comics: 'c', updates: 'u' };
   return `${map[state.dataset] || prefix}-${padded}`;
 }
 
@@ -341,6 +421,17 @@ function clearEditor() {
   cmcDictPos.value = '';
   cmcDictDefinitions.value = '';
   cmcNews.value = '';
+  updDate.value = '';
+  updBody.value = '';
+  updImage.value = '';
+  updAlt.value = '';
+  updLinkLabel.value = '';
+  updLinkHref.value = '';
+  updLinkTarget.value = '';
+  updLinkRel.value = '';
+  updPinned.value = 'false';
+  updPublished.value = 'true';
+
 }
 
 function showPanel(which) {
@@ -435,6 +526,19 @@ function renderEditor() {
     cmcDictDefinitions.value = (dict && Array.isArray(dict.definitions)) ? dict.definitions.join('\n') : '';
     cmcNews.value = it.news || '';
 
+   } else if (state.dataset === 'updates') {
+    updDate.value = it.date || '';
+    updBody.value = it.body || '';
+    updImage.value = it.image || '';
+    updAlt.value = it.alt || '';
+    updPinned.value = it.pinned ? 'true' : 'false';
+    updPublished.value = (it.published === false) ? 'false' : 'true';
+
+    const link = it.link && typeof it.link === 'object' ? it.link : null;
+    updLinkLabel.value = link ? (link.label || '') : '';
+    updLinkHref.value = link ? (link.href || '') : '';
+    updLinkTarget.value = link ? (link.target || '') : '';
+    updLinkRel.value = link ? (link.rel || '') : '';
   }
 }
 
@@ -646,7 +750,83 @@ function bindCommonFieldHandlers() {
     it.news = cmcNews.value;
     markDirty();
   });
+  // updates fields
+  updDate.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    it.date = updDate.value.trim();
+    markDirty();
+  });
 
+  updBody.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    it.body = updBody.value;
+    markDirty();
+  });
+
+  updImage.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    it.image = updImage.value.trim();
+    markDirty();
+  });
+
+  updAlt.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    it.alt = updAlt.value.trim();
+    markDirty();
+  });
+
+  updPinned.addEventListener('change', () => {
+    const it = getSelected(); if (!it) return;
+    it.pinned = (updPinned.value === 'true');
+    markDirty();
+  });
+
+  updPublished.addEventListener('change', () => {
+    const it = getSelected(); if (!it) return;
+    it.published = (updPublished.value === 'false') ? false : true;
+    markDirty();
+  });
+
+  function ensureUpdateLink(it) {
+    if (!it.link || typeof it.link !== 'object') it.link = { label: '', href: '' };
+  }
+  function cleanupUpdateLink(it) {
+    if (!it.link) return;
+    const has = (it.link.label && it.link.label.trim()) || (it.link.href && it.link.href.trim());
+    if (!has) it.link = null;
+  }
+
+  updLinkLabel.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureUpdateLink(it);
+    it.link.label = updLinkLabel.value;
+    cleanupUpdateLink(it);
+    markDirty();
+  });
+
+  updLinkHref.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureUpdateLink(it);
+    it.link.href = updLinkHref.value;
+    cleanupUpdateLink(it);
+    markDirty();
+  });
+
+  updLinkTarget.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureUpdateLink(it);
+    it.link.target = updLinkTarget.value;
+    cleanupUpdateLink(it);
+    markDirty();
+  });
+
+  updLinkRel.addEventListener('input', () => {
+    const it = getSelected(); if (!it) return;
+    ensureUpdateLink(it);
+    it.link.rel = updLinkRel.value;
+    cleanupUpdateLink(it);
+    markDirty();
+  });
 
 }
 
@@ -699,12 +879,22 @@ function onNewItem() {
     blank.image = '';
     blank.alt = '';
   }
-
+  if (ds === 'updates') {
+    blank.date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    blank.body = '';
+    blank.image = '';
+    blank.alt = '';
+    blank.link = null;
+    blank.pinned = false;
+    blank.published = true;
+  }
   state.items.unshift(blank);
   state.selectedId = id;
   markDirty();
   refreshUI();
   selectById(id);
+
+  
 }
 
 function onDuplicateItem() {

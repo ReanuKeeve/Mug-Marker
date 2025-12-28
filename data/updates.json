@@ -1,0 +1,13 @@
+[
+  {
+    "id": "u-001",
+    "title": "Winter break schedule",
+    "date": "2025-12-28",
+    "body": "New comics return on Jan 3. Happy holidays!",
+    "image": "assets/updates/winter-break.jpg",
+    "alt": "A mug and a marker on a snowy desk.",
+    "link": { "label": "Visit my reddit page", "href": "https://www.reddit.com/u/MugMarker", "target": "_blank", "rel": "noopener noreferrer" },
+    "pinned": true,
+    "published": true
+  }
+]

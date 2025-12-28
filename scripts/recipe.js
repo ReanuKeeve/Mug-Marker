@@ -10,7 +10,7 @@ async function initRecipePage() {
   const response = await fetch('data/recipes.json');
   const recipes = await response.json();
 
-  const recipe = recipes.find(r => r.id === id);
+  const recipe = recipes.find(r => String(r.id) === String(id));
   if (!recipe) return;
 
   const titleElem = document.getElementById('recipe-title');
@@ -161,7 +161,23 @@ async function initRecipePage() {
       }
     }
   }
-  document.getElementById("back-button").addEventListener("click", () => {
-  window.location.href = "recipes.html";
-});
+
+  const backBtn = document.getElementById('back-button');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      window.location.href = 'recipes.html';
+    });
+  }
+
+  const randomBtn = document.getElementById('random-recipe-button');
+  if (randomBtn && Array.isArray(recipes) && recipes.length) {
+    randomBtn.addEventListener('click', () => {
+      const pool = recipes.filter(r => String(r.id) !== String(id));
+      const candidates = pool.length ? pool : recipes;
+      const random = candidates[Math.floor(Math.random() * candidates.length)];
+      if (random?.id !== undefined) {
+        window.location.href = `recipe.html?id=${encodeURIComponent(random.id)}`;
+      }
+    });
+  }
 }

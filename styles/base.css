@@ -190,6 +190,10 @@ img {
   display: block;
 }
 
+.hidden {
+  display: none !important;
+}
+
 a,
 a:visited,
 a:hover,
@@ -427,6 +431,40 @@ header.nav-open .nav-toggle__bar:nth-child(3) {
 
 .btn:hover {
   background: #e6dcff;
+}
+
+.detail-page .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 12px;
+  background: var(--accent-yellow);
+  border: 2px solid #e8b95f;
+  color: #4a2c00;
+  text-decoration: none;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-tiny);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.12s ease;
+}
+
+.detail-page .btn:hover {
+  background: #ffdfa3;
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.recipe-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.recipe-actions #random-recipe-button {
+  margin-left: auto;
 }
 
 @media (min-width: 900px) {

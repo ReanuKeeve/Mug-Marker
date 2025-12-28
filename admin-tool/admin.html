@@ -24,6 +24,7 @@
             <option value="worksheets">Worksheets</option>
             <option value="recipes">Recipes</option>
             <option value="comics">Comics</option>
+            <option value="updates">Updates</option>
           </select>
         </label>
 
@@ -300,6 +301,67 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div id="panel-updates" class="panel hidden" aria-label="Update fields">
+          <div class="panel-title">Homepage Updates</div>
+
+          <div class="grid">
+            <label class="field">
+              <span>Date (YYYY-MM-DD)</span>
+              <input id="upd-date" type="text" placeholder="2025-12-28" />
+            </label>
+
+            <label class="field">
+              <span>Published</span>
+              <select id="upd-published">
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </label>
+
+            <label class="field full">
+              <span>Body</span>
+              <textarea id="upd-body" rows="4" placeholder="Short update text…"></textarea>
+            </label>
+
+            <label class="field full">
+              <span>Image URL (optional)</span>
+              <input id="upd-image" type="text" placeholder="assets/updates/u-001.jpg" />
+            </label>
+
+            <label class="field full">
+              <span>Alt text (required if image is set)</span>
+              <input id="upd-alt" type="text" placeholder="Describe the image…" />
+            </label>
+
+            <label class="field">
+              <span>Link label (optional)</span>
+              <input id="upd-link-label" type="text" placeholder="Read more" />
+            </label>
+
+            <label class="field">
+              <span>Link href (optional)</span>
+              <input id="upd-link-href" type="text" placeholder="pages/recipes.html" />
+            </label>
+
+            <label class="field">
+              <span>Link target (optional)</span>
+              <input id="upd-link-target" type="text" placeholder="_blank" />
+            </label>
+
+            <label class="field">
+              <span>Link rel (recommended with _blank)</span>
+              <input id="upd-link-rel" type="text" placeholder="noopener noreferrer" />
+            </label>
+
+            <label class="field">
+              <span>Pinned</span>
+              <select id="upd-pinned">
+                <option value="false">false</option>
+                <option value="true">true</option>
+              </select>
+            </label>
           </div>
 
           <div class="divider"></div>

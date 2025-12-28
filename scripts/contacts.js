@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contact-form');
 
   // Use ONE email consistently:
-  const TO_EMAIL = 'ylsasha+mugandmarker@gmail.com';
+  const TO_EMAIL = 'info@mugmarker.ink';
 
   const byId = (id) => document.getElementById(id);
 

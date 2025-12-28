@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <base href="/Mug-Marker/">
+    <base href="/Mug-Marker/" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/index.css" />
@@ -118,6 +119,15 @@
         </ul>
       </section>
       <section id="comic-news" class="comic-news" hidden></section>
+      <section id="updates" class="updates-section" aria-labelledby="updates-title">
+  <h2 id="updates-title" class="updates-title">Updates</h2>
+
+  <!-- JS will render update cards into this container -->
+  <div id="updates-list" class="updates-list"></div>
+
+  <!-- Optional: shown only if there are no published updates -->
+  <p id="updates-empty" class="updates-empty hidden">No updates yet.</p>
+</section>
     </main>
     <footer>
       <p>&copy; 2024 Mug & Marker. All rights reserved.</p>
